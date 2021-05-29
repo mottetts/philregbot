@@ -1,0 +1,11 @@
+__pycache__
+
+*.db
+*.zip
+*.cpg
+*.prj
+*.shp
+*.shx
+*.dbf
+*.shp.xml
+*.yaml
