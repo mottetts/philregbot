@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-# Copyright 2015 Neil Freeman
+# Every Historic Lot PHL
+# Copyright 2021 Christopher Mote
+# Adapted from everylotbot, Copyright 2016 Neil Freeman
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or

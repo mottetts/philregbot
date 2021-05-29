@@ -1,26 +1,11 @@
 #!/usr/env python
 # -*- coding: utf-8 -*-
-# This file is part of everylotbot
-# Copyright 2016 Neil Freeman
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from __future__ import unicode_literals
 import sqlite3
 import logging
 from io import BytesIO
 import requests
-# import os
 
 QUERY = """SELECT
     *
@@ -192,7 +177,6 @@ class EveryLot(object):
                     tweet += ' (est)'
         if self.lot['desigdate'] not in ('0','','pending'):
             tweet += '\nDesignated: {}'.format(self.lot['desigdate'])
-        # if my_lot.get('district') // if my_lot['district']
         if self.lot['district'] != '' and self.lot['districtdate'] not in ('0','','pending'):
             tweet += '\nDistrict: {}'.format(self.lot['district'])
             tweet += '\nDistrict designated: {}'.format(self.lot['districtdate'])
