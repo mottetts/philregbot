@@ -58,7 +58,7 @@ class EveryLot(object):
         '''Set field-of-view and pitch'''
         fov, pitch = 65, 10
         try:
-            floors = float(self.lot.get('num_stories', 0)) or 2
+            floors = float(self.lot.get('floors', 0)) or 2
         except TypeError:
             floors = 2
 
@@ -117,8 +117,8 @@ class EveryLot(object):
         # bounds in (miny minx maxy maxx) aka (s w n e)
         try:
             d = 0.007
-            minpt = self.lot['lat'] - d, self.lot['lon'] - d
-            maxpt = self.lot['lat'] + d, self.lot['lon'] + d
+            minpt = float(self.lot['lat']) - d, float(self.lot['lon']) - d
+            maxpt = float(self.lot['lat']) + d, float(self.lot['lon']) + d
 
         except (KeyError,TypeError):
             self.logger.info('Could not find lat/lon coordinates. Using address naively.')
