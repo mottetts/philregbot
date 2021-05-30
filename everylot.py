@@ -35,7 +35,7 @@ class EveryLot(object):
         self.logger = kwargs.get('logger', logging.getLogger('everylot'))
 
         # set address format for fetching from DB
-        self.search_format = search_format or '{address}, Philadelphia, PA'
+        self.search_format = search_format or '{address}, Philadelphia, PA {zip}'
 
         self.logger.debug('searching google sv with %s', self.search_format)
         
@@ -166,20 +166,30 @@ class EveryLot(object):
         district designation date.
         '''
         
-        tweet = self.lot['address']
+        tweet = ''
+        
+        if self.lot['official_yn'] == 'Y':
+            tweet = (self.lot['address']).title()
+        
         if self.lot['histname'] != '':
             tweet += '\n{}'.format(self.lot['histname'])
-            if self.lot['phc_date'] not in ('0',''):
-                tweet += ', {}'.format(self.lot['phc_date'])
-            elif self.lot['year_opa'] not in ('','0'):
-                tweet += ', {}'.format(self.lot['year_opa'])
-                if self.lot['year_est_yn'] != 'Y':
-                    tweet += ' (est)'
+        
+        if self.lot['phc_date'] not in ('0',''):
+            tweet += '  - {}'.format(self.lot['phc_date'])
+        elif self.lot['opa'] not in ('0',None):
+            tweet += '  - {}'.format(self.lot['opa'])
+            if self.lot['est'] == 'Y':
+                tweet += ' (est)'
+                    
         if self.lot['desigdate'] not in ('0','','pending'):
             tweet += '\nDesignated: {}'.format(self.lot['desigdate'])
+            
         if self.lot['district'] != '' and self.lot['districtdate'] not in ('0','','pending'):
             tweet += '\nDistrict: {}'.format(self.lot['district'])
             tweet += '\nDistrict designated: {}'.format(self.lot['districtdate'])
+            
+        if self.lot['interiordate'] not in ('0','','pending'):
+            tweet += '\nInterior designated: {}'.format(self.lot['interiordate'])
         
         return tweet
 
