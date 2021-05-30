@@ -120,7 +120,8 @@ class EveryLot(object):
             minpt = float(self.lot['lat']) - d, float(self.lot['lon']) - d
             maxpt = float(self.lot['lat']) + d, float(self.lot['lon']) + d
 
-        except (KeyError,TypeError):
+        except Exception as e:
+            self.logger.info(e)
             self.logger.info('Could not find lat/lon coordinates. Using address naively.')
             return address
 
@@ -149,7 +150,7 @@ class EveryLot(object):
             ))
 
             if outside_comfort_zone:
-                raise ValueError('google geocode puts us outside outside our comfort zone')
+                raise ValueError('google geocode puts us outside our comfort zone')
 
             self.logger.debug('using db address for sv')
             return address
@@ -162,8 +163,8 @@ class EveryLot(object):
     def write_tweet(self):
         '''
         Format the text of the tweet, which should at minimum include an address and date of 
-        designation. Optional details are historic name, date built, historic district and 
-        district designation date.
+        designation. Optional details are historic name, date built, historic district, 
+        district designation date, and interior designation date.
         '''
         
         tweet = ''
@@ -175,9 +176,9 @@ class EveryLot(object):
             tweet += '\n{}'.format(self.lot['histname'])
         
         if self.lot['phc_date'] not in ('0',''):
-            tweet += '  - {}'.format(self.lot['phc_date'])
-        elif self.lot['opa'] not in ('0',None):
-            tweet += '  - {}'.format(self.lot['opa'])
+            tweet += '\nBuilt: {}'.format(self.lot['phc_date'])
+        elif self.lot['opa'] not in ('0','',None):
+            tweet += '\nBuilt: {}'.format(self.lot['opa'])
             if self.lot['est'] == 'Y':
                 tweet += ' (est)'
                     
