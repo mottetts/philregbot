@@ -169,8 +169,9 @@ class EveryLot(object):
         
         tweet = ''
         
+        # Deconvert all caps in address
         if self.lot['official_yn'] == 'Y':
-            tweet = (self.lot['address']).title()
+            tweet = " ".join(word.capitalize() for word in self.lot['address'].split())
         
         if self.lot['histname'] != '':
             tweet += '\n{}'.format(self.lot['histname'])
