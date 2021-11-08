@@ -10,7 +10,7 @@ import requests
 QUERY = """SELECT
     *
     FROM lots
-    where {} = ? and ({} not in (?,?) or {} not in (?,?))
+    where {} = ? and {} = ? and ({} not in (?,?) or {} not in (?,?))
     ORDER BY random()
     LIMIT 1;
 """
@@ -50,7 +50,7 @@ class EveryLot(object):
             field = 'tweeted'
             value = 0
 
-        curs = self.conn.execute(QUERY.format(field,'desigdate','districtdate'), (value,'','pending','','pending'))
+        curs = self.conn.execute(QUERY.format(field,'rescissiondate','desigdate','districtdate'), (value,'','','pending','','pending'))
         keys = [c[0] for c in curs.description]
         self.lot = dict(zip(keys, curs.fetchone()))
 
